@@ -3,7 +3,7 @@
 ![screenshot](https://github.com/hanton/HTY360Player/blob/master/Screenshot/HTY360Player.gif)
 
 ## About
-HTY360Player is a 360° video player for iOS. It supports moving the phone for video panning.
+HTY360Player is a 360° video player for iOS. It supports video panning by moving the phone.
 
 ## Motivation
 Facebook has released a new function to play 360° video in its app.
@@ -16,7 +16,7 @@ Youtube App also has a 360° video channel.
 
 ## Todo
 1. Metal version.
-2. Play online 360° video by url.
+2. Play online 360° video by URL.
 
 ## Author
 Hanton Yang, hanton.yang@gmail.com
