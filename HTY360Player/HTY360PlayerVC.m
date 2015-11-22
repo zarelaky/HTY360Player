@@ -135,7 +135,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
 #pragma mark video communication
 
-- (CVPixelBufferRef) retrievePixelBufferToDraw {
+- (CVPixelBufferRef)retrievePixelBufferToDraw {
   CVPixelBufferRef pixelBuffer = [_videoOutput copyPixelBufferForItemTime:[_playerItem currentTime] itemTimeForDisplay:nil];
   
   return pixelBuffer;
@@ -263,12 +263,12 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
   }
 }
 
-- (void) updatePlayButton {
+- (void)updatePlayButton {
   [_playButton setImage:[UIImage imageNamed:[self isPlaying] ? @"playback_pause" : @"playback_play"]
                forState:UIControlStateNormal];
 }
 
--(void) play {
+-(void)play {
   if ([self isPlaying])
     return;
   /* If we are at the end of the movie, we must seek to the beginning first
@@ -284,7 +284,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
   [self scheduleHideControls];
 }
 
-- (void) pause {
+- (void)pause {
   if (![self isPlaying])
     return;
   
@@ -296,7 +296,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
 #pragma mark progress slider management
 
--(void) configureProgressSlider {
+-(void)configureProgressSlider {
   _progressSlider.continuous = NO;
   _progressSlider.value = 0;
   
@@ -306,12 +306,12 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
 #pragma mark back and gyro button management
 
--(void) configureBackButton {
+-(void)configureBackButton {
   _backButton.backgroundColor = [UIColor clearColor];
   _backButton.showsTouchWhenHighlighted = YES;
 }
 
--(void) configureGyroButton {
+-(void)configureGyroButton {
   _gyroButton.backgroundColor = [UIColor clearColor];
   _gyroButton.showsTouchWhenHighlighted = YES;
 }
@@ -329,7 +329,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
   _playerControlBackgroundView.layer.cornerRadius = 8;
 }
 
--(void) toggleControls {
+-(void)toggleControls {
   if(_playerControlBackgroundView.hidden){
     [self showControlsFast];
   }else{
@@ -339,14 +339,14 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
   [self scheduleHideControls];
 }
 
--(void) scheduleHideControls {
+-(void)scheduleHideControls {
   if(!_playerControlBackgroundView.hidden) {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self performSelector:@selector(hideControlsSlowly) withObject:nil afterDelay:HIDE_CONTROL_DELAY];
   }
 }
 
--(void) hideControlsWithDuration:(NSTimeInterval)duration {
+-(void)hideControlsWithDuration:(NSTimeInterval)duration {
   _playerControlBackgroundView.alpha = DEFAULT_VIEW_ALPHA;
   [UIView animateWithDuration:duration
                         delay:0.0
@@ -362,15 +362,15 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
   
 }
 
--(void) hideControlsFast {
+-(void)hideControlsFast {
   [self hideControlsWithDuration:0.2];
 }
 
--(void) hideControlsSlowly {
+-(void)hideControlsSlowly {
   [self hideControlsWithDuration:1.0];
 }
 
--(void) showControlsFast {
+-(void)showControlsFast {
   _playerControlBackgroundView.alpha = 0.0;
   _playerControlBackgroundView.hidden = NO;
   [UIView animateWithDuration:0.2

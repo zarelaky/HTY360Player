@@ -110,6 +110,8 @@ GLint uniforms[NUM_UNIFORMS];
   _preferredConversion = kColorConversion709;
   
   [self setupGL];
+  
+  [self startDeviceMotion];
 }
 
 -(UIInterfaceOrientationMask) supportedInterfaceOrientations {
