@@ -10,14 +10,14 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-@interface GLProgram : NSObject {
-  NSMutableArray  *attributes;
-  NSMutableArray  *uniforms;
-  GLuint vertShader,
-  fragShader;
-}
+@interface GLProgram : NSObject
 
-@property (assign, nonatomic) GLuint program;
+@property (nonatomic, strong) NSMutableArray *attributes;
+@property (nonatomic, strong) NSMutableArray *uniforms;
+@property (nonatomic, assign) GLuint vertShader;
+@property (nonatomic, assign) GLuint fragShader;
+@property (nonatomic, assign) GLuint program;
+@property (nonatomic, copy) NSString *a;
 
 - (id)initWithVertexShaderString:(NSString *)vShaderString
             fragmentShaderString:(NSString *)fShaderString;

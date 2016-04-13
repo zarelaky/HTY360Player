@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+
 @class HTY360PlayerVC;
 
 @interface HTYGLKVC : GLKViewController<UIGestureRecognizerDelegate>

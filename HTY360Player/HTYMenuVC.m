@@ -11,56 +11,54 @@
 #import "HTY360PlayerVC.h"
 
 @interface HTYMenuVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
 @end
 
 @implementation HTYMenuVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    
-  }
-  return self;
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+    }
+    return self;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-  return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskLandscape;
 }
 
-#pragma mark button management
+#pragma mark - button management
 
 - (IBAction)playDemo:(id)sender {
-  [self launchVideoWithName:@"demo"];
+    [self launchVideoWithName:@"demo"];
 }
 
 - (IBAction)playFile:(id)sender {
-  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-  picker.delegate = self;
-  picker.modalPresentationStyle = UIModalPresentationCurrentContext;
-  picker.mediaTypes =[UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-  picker.mediaTypes =
-  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
-  picker.videoQuality = UIImagePickerControllerQualityTypeHigh;
-  [self presentViewController:picker animated:YES completion:nil];
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.modalPresentationStyle = UIModalPresentationCurrentContext;
+    picker.mediaTypes =[UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    picker.mediaTypes =
+    [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    picker.videoQuality = UIImagePickerControllerQualityTypeHigh;
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-  [picker dismissViewControllerAnimated:YES completion:nil];
-//  NSLog(@"%@", [info objectForKey:UIImagePickerControllerMediaURL]);
-  NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
-  HTY360PlayerVC *videoController = [[HTY360PlayerVC alloc] initWithNibName:@"HTY360PlayerVC" bundle:nil url:url];
-  
-  //  if(![[self presentedViewController] isBeingDismissed])
-  //  {
-  [self presentViewController:videoController animated:YES completion:nil];
-  //  }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
+    HTY360PlayerVC *videoController = [[HTY360PlayerVC alloc] initWithNibName:@"HTY360PlayerVC"
+                                                                       bundle:nil
+                                                                          url:url];
+    
+    //  if(![[self presentedViewController] isBeingDismissed])
+    //  {
+    [self presentViewController:videoController animated:YES completion:nil];
+    //  }
 }
 
 @end
