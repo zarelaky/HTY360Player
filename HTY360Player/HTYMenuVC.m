@@ -30,11 +30,30 @@
 
 #pragma mark - button management
 
-- (IBAction)playDemo:(id)sender {
+- (IBAction)playDemo:(UIButton *)sender {
     [self launchVideoWithName:@"demo"];
 }
 
-- (IBAction)playFile:(id)sender {
+- (IBAction)playOnlineURL:(UIButton *)sender {
+    NSString *defaultURLString = @"http://d8d913s460fub.cloudfront.net/krpanocloud/video/airpano/video-1920x960a.mp4";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Play Online URL"
+                                                                   message:@"Enter the URL"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Play" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSURL *url = [[NSURL alloc] initWithString:[[alert textFields] firstObject].text];
+        HTY360PlayerVC *videoController = [[HTY360PlayerVC alloc] initWithNibName:@"HTY360PlayerVC"
+                                                                           bundle:nil
+                                                                              url:url];
+        [self presentViewController:videoController animated:YES completion:nil];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = defaultURLString;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (IBAction)playFile:(UIButton *)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.modalPresentationStyle = UIModalPresentationCurrentContext;
