@@ -17,7 +17,6 @@
 @property (nonatomic, assign) GLuint vertShader;
 @property (nonatomic, assign) GLuint fragShader;
 @property (nonatomic, assign) GLuint program;
-@property (nonatomic, copy) NSString *a;
 
 - (id)initWithVertexShaderString:(NSString *)vShaderString
             fragmentShaderString:(NSString *)fShaderString;
@@ -32,10 +31,5 @@
 
 - (BOOL)link;
 - (void)use;
-
-- (NSString *)vertexShaderLog;
-- (NSString *)fragmentShaderLog;
-- (NSString *)programLog;
-- (void)validate;
 
 @end

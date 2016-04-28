@@ -11,7 +11,6 @@
 #pragma mark - Function Pointer Definitions
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
-typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 #pragma mark - Private Extension Method Declaration
 
@@ -20,9 +19,6 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 - (BOOL)compileShader:(GLuint *)shader
                  type:(GLenum)type
                string:(NSString *)shaderString;
-- (NSString *)logForOpenGLObject:(GLuint)object
-                    infoCallback:(GLInfoFunction)infoFunc
-                         logFunc:(GLLogFunction)logFunc;
 @end
 
 @implementation GLProgram
@@ -168,58 +164,6 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 - (void)use {
     glUseProgram(self.program);
-}
-
-#pragma mark - privatelog
-
-- (NSString *)logForOpenGLObject:(GLuint)object
-                    infoCallback:(GLInfoFunction)infoFunc
-                         logFunc:(GLLogFunction)logFunc {
-    GLint logLength = 0, charsWritten = 0;
-    
-    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength < 1)
-        return nil;
-    
-    char *logBytes = malloc(logLength);
-    logFunc(object, logLength, &charsWritten, logBytes);
-    NSString *log = [[NSString alloc] initWithBytes:logBytes
-                                             length:logLength
-                                           encoding:NSUTF8StringEncoding];
-    free(logBytes);
-    return log;
-}
-
-- (NSString *)vertexShaderLog {
-    return [self logForOpenGLObject:self.vertShader
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
-    
-}
-
-- (NSString *)fragmentShaderLog {
-    return [self logForOpenGLObject:self.fragShader
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
-- (NSString *)programLog {
-    return [self logForOpenGLObject:self.program
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
-- (void)validate {
-    GLint logLength;
-    
-    glValidateProgram(self.program);
-    glGetProgramiv(self.program, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0) {
-        GLchar *infoLog = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(self.program, logLength, &logLength, infoLog);
-        NSLog(@"Program validate log:\n%s", infoLog);
-        free(infoLog);
-    }
 }
 
 #pragma mark - dealloc

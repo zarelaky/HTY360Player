@@ -350,29 +350,6 @@ int esGenSphere ( int numSlices, float radius, float **vertices, float **normals
 
 #pragma mark - GLKView and GLKViewController delegate methods
 
-#if SHOW_DEBUG_LABEL
-- (NSString *)orientationString:(UIDeviceOrientation)orientation {
-    switch (orientation) {
-        case UIDeviceOrientationUnknown: return @"Unknown";
-        case UIDeviceOrientationPortrait: return @"Portrait";
-        case UIDeviceOrientationPortraitUpsideDown: return @"Portrait Upside Down";
-        case UIDeviceOrientationLandscapeLeft: return @"Landscape Left";
-        case UIDeviceOrientationLandscapeRight: return @"Landscape Right";
-        case UIDeviceOrientationFaceUp: return @"Face Up";
-        case UIDeviceOrientationFaceDown: return @"Face Down";
-        default: break;
-    }
-    return nil;
-}
-
-- (void)fillDebugValues:(CMAttitude *)attitude {
-    self.videoPlayerController.rollValueLabel.text = [NSString stringWithFormat:@"%1.0f°", GLKMathRadiansToDegrees(attitude.roll)];
-    self.videoPlayerController.yawValueLabel.text = [NSString stringWithFormat:@"%1.0f°", GLKMathRadiansToDegrees(attitude.yaw)];
-    self.videoPlayerController.pitchValueLabel.text = [NSString stringWithFormat:@"%1.0f°", GLKMathRadiansToDegrees(attitude.pitch)];
-    self.videoPlayerController.orientationValueLabel.text = [self orientationString:[[UIDevice currentDevice] orientation]];
-}
-#endif
-
 - (BOOL)isLandscapeOrFlat {
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     return UIDeviceOrientationIsLandscape(orientation) || orientation==UIDeviceOrientationFaceUp || orientation==UIDeviceOrientationFaceDown;
@@ -400,10 +377,6 @@ int esGenSphere ( int numSlices, float radius, float **vertices, float **normals
                 //NSLog(@"was nil : set new attitude", nil);
                 _referenceAttitude = d.attitude;
             }
-            
-#if SHOW_DEBUG_LABEL
-            [self fillDebugValues:attitude];
-#endif
             
             float cRoll = -fabs(attitude.roll); // Up/Down landscape
             float cYaw = attitude.yaw;  // Left/ Right landscape
@@ -557,12 +530,6 @@ int esGenSphere ( int numSlices, float radius, float **vertices, float **normals
     [_program addAttribute:@"texCoord"];
     
     if (![_program link]) {
-        NSString *programLog = [_program programLog];
-        NSLog(@"Program link log: %@", programLog);
-        NSString *fragmentLog = [_program fragmentShaderLog];
-        NSLog(@"Fragment shader compile log: %@", fragmentLog);
-        NSString *vertexLog = [_program vertexShaderLog];
-        NSLog(@"Vertex shader compile log: %@", vertexLog);
         _program = nil;
         NSAssert(NO, @"Falied to link HalfSpherical shaders");
     }

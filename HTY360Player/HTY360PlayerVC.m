@@ -16,7 +16,7 @@
 NSString * const kTracksKey = @"tracks";
 NSString * const kPlayableKey = @"playable";
 NSString * const kRateKey = @"rate";
-NSString * const kCurrentItemKey	 = @"currentItem";
+NSString * const kCurrentItemKey = @"currentItem";
 NSString * const kStatusKey = @"status";
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
@@ -142,7 +142,6 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     NSDictionary *pixelBuffAttributes = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange)};
     _videoOutput = [[AVPlayerItemVideoOutput alloc] initWithPixelBufferAttributes:pixelBuffAttributes];
     _myVideoOutputQueue = dispatch_queue_create("myVideoOutputQueue", DISPATCH_QUEUE_SERIAL);
-    [_videoOutput setDelegate:self queue:_myVideoOutputQueue];
     
     _player = [[AVPlayer alloc] init];
     
